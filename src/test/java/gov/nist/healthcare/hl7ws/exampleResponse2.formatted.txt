@@ -1,0 +1,124 @@
+{"metaData":{
+  "date":"2015-11-04T15:11:44.576-05:00",
+  "failuresInterpretation":[
+    {"RE_USAGE":"WARNING"},
+    {"CONSTRAINT_FAILURE":"ERROR"},
+    {"CODED_ELEMENT":"ERROR"},
+    {"INVALID_CONTENT":"ERROR"},
+    {"X_USAGE":"ERROR"},
+    {"W_USAGE":"ERROR"},
+    {"CONSTRAINT_SUCCESS":"INFORMATIONAL"},
+    {"CONSTRAINT_SPEC_ERROR":"INFORMATIONAL"},
+    {"PREDICATE_SPEC_ERROR":"INFORMATIONAL"},
+    {"VALUE_SET":"ERROR"},
+    {"VALUE_SET":"ALERT"},
+    {"VALUE_SET":"WARNING"},
+    {"EXTRA":"ERROR"},
+    {"PREDICATE_SUCCESS":"INFORMATIONAL"},
+    {"LENGTH":"ERROR"},
+    {"PREDICATE":"ERROR"},
+    {"R_USAGE":"ERROR"},
+    {"UNEXPECTED":"ERROR"},
+    {"FORMAT":"ERROR"},
+    {"UNESCAPED_SEPARATOR":"ERROR"},
+    {"CONFORMANCE_STATEMENT":"ERROR"},
+    {"CARDINALITY":"ERROR"}
+  ],
+  "service":{
+    "provider":"NIST",
+    "name":"NIST HL7V2 Message Validation",
+    "version":"1.0"
+  },
+  "counts":{
+    "alert":0,
+    "warning":7,
+    "informational":7,
+    "error":7,
+    "affirmative":0
+  },
+  "validationType":"Automated",
+  "profile":{
+    "orgName":"NIST",
+    "name":"ACK",
+    "type":"ACK",
+    "version":"20150821-1"
+  },
+  "standardType":"HL7 V2",
+  "message":{
+    "encoding":
+    "ER7",
+    "content": "MSH|^~\\&|^^|^^|^^|^^|20151104121109||ACK^|4413295681.100010873|P|2.5.1|\rMSA|AA|3C8i-A.01.07.XJ|Patient 3C8i-A.01.07 \"Charisse Bracey\" with 3 vaccinations accepted into vaccination staging table|\r"},
+    "type":"Context-Free",
+    "validationStatus":"false"
+  },
+  "detections":{
+    "Warning":{
+      "RE-Usage":[
+        {
+          "path":"ACK[1]",
+          "line":1,
+          "column":1,
+          "description":"Segment ERR (Error) is missing. Depending on the use case and data availability it may be appropriate to value this element",
+          "stackTrace":null,
+          "category":"RE-Usage",
+          "classification":"Warning"
+        },
+        {
+          "path":"MSH[1]",
+          "line":1,
+          "column":1,
+          "description":"Field MSH-23 (Receiving Responsible Organization) is missing. Depending on the use case and data availability it may be appropriate to value this element",
+          "stackTrace":null,
+          "category":"RE-Usage",
+          "classification":"Warning"
+        },
+        {
+          "path":"MSH[1]",
+          "line":1,
+          "column":1,
+          "description":"Field MSH-22 (Sending Responsible Organization) is missing. Depending on the use case and data availability it may be appropriate to value this element",
+          "stackTrace":null,
+          "category":"RE-Usage",
+          "classification":"Warning"
+        },
+        {
+          "path":"MSH[1]",
+          "line":1,
+          "column":1,
+          "description":"Field MSH-6 (Receiving Facility) is missing. Depending on the use case and data availability it may be appropriate to value this element",
+          "stackTrace":null,
+          "category":"RE-Usage",
+          "classification":"Warning"
+        },
+        {
+          "path":"MSH[1]",
+          "line":1,
+          "column":1,
+          "description":"Field MSH-5 (Receiving Application) is missing. Depending on the use case and data availability it may be appropriate to value this element",
+          "stackTrace":null,
+          "category":"RE-Usage",
+          "classification":"Warning"
+        },{
+          "path":"MSH[1]",
+          "line":1,
+          "column":1,
+          "description":"Field MSH-4 (Sending Facility) is missing. Depending on the use case and data availability it may be appropriate to value this element",
+          "stackTrace":null,
+          "category":"RE-Usage",
+          "classification":"Warning"
+        },
+        {
+          "path":"MSH[1]",
+          "line":1,
+          "column":1,
+          "description":"Field MSH-3 (Sending Application) is missing. Depending on the use case and data availability it may be appropriate to value this element",
+          "stackTrace":null,
+          "category":"RE-Usage",
+          "classification":"Warning"
+        }
+      ]
+    },
+    "Error":{
+      "Constraint Failure":[
+        {
+          "path":"MSH[1]-7[1].1","line":1,"column":22,"description":"IZ-TS_Z - The value of MSH.7.1 (Time) SHALL be formatted with YYYYMMDDHHMMSS+-ZZZZ.","stackTrace":[{"reasons":["[1, 22] '20151104121109' doesn't match '([0-9]{4})((0[1-9])|(1[0-2]))((0[1-9])|([1-2][0-9])|(3[0-1]))(([0-1][0-9])|(2[0-3]))([0-5][0-9])([0-5][0-9]).*((\\+|\\-)[0-9]{4})'"],"assertion":"()MSH.7[1].1[1] SHALL match '([0-9]{4})((0[1-9])|(1[0-2]))((0[1-9])|([1-2][0-9])|(3[0-1]))(([0-1][0-9])|(2[0-3]))([0-5][0-9])([0-5][0-9]).*((\\+|\\-)[0-9]{4})' regular expression"}],"category":"Constraint Failure","classification":"Error"}],"R-Usage":[{"path":"MSH[1]","line":1,"column":1,"description":"The required Field MSH-21 (Message Profile Identifier) is missing","stackTrace":null,"category":"R-Usage","classification":"Error"},{"path":"MSH[1]","line":1,"column":1,"description":"The required Field MSH-16 (Application Acknowledgment Type) is missing","stackTrace":null,"category":"R-Usage","classification":"Error"},{"path":"MSH[1]","line":1,"column":1,"description":"The required Field MSH-15 (Accept Acknowledgment Type) is missing","stackTrace":null,"category":"R-Usage","classification":"Error"},{"path":"MSH[1]-9[1]","line":1,"column":38,"description":"The required Component MSH-9.3 (Message Structure) is missing","stackTrace":null,"category":"R-Usage","classification":"Error"},{"path":"MSH[1]-9[1]","line":1,"column":38,"description":"The required Component MSH-9.2 (Trigger Event) is missing","stackTrace":null,"category":"R-Usage","classification":"Error"}],"X-Usage":[{"path":"MSA[1]-3[1]","line":2,"column":24,"description":"The Field MSA-3 (Text Message) is present whereas it is an unsupported element (Usage = X)","stackTrace":null,"category":"X-Usage","classification":"Error"}]},"Informational":{"Constraint Success":[{"path":"MSH[1]","line":1,"column":1,"description":"IZ-12 - The value of MSH.1 (Field Separator) SHALL be '|'.","stackTrace":null,"category":"Constraint Success","classification":"Informational"},{"path":"MSH[1]","line":1,"column":1,"description":"IZ-13 - The value of MSH.2 (Encoding Characters) SHALL be '^~\\&'.","stackTrace":null,"category":"Constraint Success","classification":"Informational"},{"path":"MSH[1]","line":1,"column":1,"description":"IZ-51 - The value of MSH.9 (Message Type) SHALL be 'ACK^V04^ACK' or \"ACK^Q11^ACK\".","stackTrace":null,"category":"Constraint Success","classification":"Informational"},{"path":"MSH[1]","line":1,"column":1,"description":"IZ-15 - The value of MSH.12.1 (Version ID) SHALL be '2.5.1'.","stackTrace":null,"category":"Constraint Success","classification":"Informational"},{"path":"MSH[1]","line":1,"column":1,"description":"IZ-53 - The value of MSH.15 (Accept Acknowledgment Type) SHALL be 'NE'.","stackTrace":null,"category":"Constraint Success","classification":"Informational"},{"path":"MSH[1]","line":1,"column":1,"description":"IZ-52 - The value of MSH.16 (Application Acknowledgment Type) SHALL be 'NE'.","stackTrace":null,"category":"Constraint Success","classification":"Informational"},{"path":"MSH[1]","line":1,"column":1,"description":"IZ-54 - The value of MSH.21[1] (Message Profile Identifier) SHALL be 'Z23^CDCPHINVS'.","stackTrace":null,"category":"Constraint Success","classification":"Informational"}]}}}

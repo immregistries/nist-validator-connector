@@ -1,0 +1,252 @@
+<HL7V2MessageValidationReport xmlns="http://www.nist.gov/healthcare/validation/message/hl7/v2/report" xmlns:mes="http://www.nist.gov/healthcare/validation/message" xmlns:con="http://www.nist.gov/healthcare/validation/message/hl7/v2/context" xmlns:prof="http://www.nist.gov/healthcare/profile">
+  <HeaderReport>
+    <mes:ValidationStatus>Complete</mes:ValidationStatus>
+    <mes:ServiceName>NIST HL7V2 Message Validation</mes:ServiceName>
+    <mes:ServiceProvider>NIST</mes:ServiceProvider>
+    <mes:ServiceVersion>1.0</mes:ServiceVersion>
+    <mes:StandardType>HL7 V2</mes:StandardType>
+    <mes:StandardVersion>2.5.1</mes:StandardVersion>
+    <mes:ValidationType>Automated</mes:ValidationType>
+    <mes:TestIdentifier/>
+    <mes:DateOfTest>2015-11-04-05:00</mes:DateOfTest>
+    <mes:TimeOfTest>10:13:50.546-05:00</mes:TimeOfTest>
+    <mes:ValidationObjectReferenceList/>
+    <mes:TestObjectReferenceList/>
+    <mes:PositiveAssertionIndicator>true</mes:PositiveAssertionIndicator>
+    <mes:ResultOfTest>Failed</mes:ResultOfTest>
+    <mes:AffirmCount>6</mes:AffirmCount>
+    <mes:ErrorCount>8</mes:ErrorCount>
+    <mes:WarningCount>0</mes:WarningCount>
+    <mes:IgnoreCount>0</mes:IgnoreCount>
+    <mes:AlertCount>2</mes:AlertCount>
+    <mes:TestObject>MSH|^~\&amp;|Test EHR Application|X68||NIST Test Iz Reg|201207010822||VXU^V04^VXU_V04|NIST-IZ-001.00|P|2.5.1|||AL|ER
+PID|1||D26376273^^^NIST MPI^MR||Snow^^Ainsley^^^^L|Lam^Morgan|20070706|F||2076-8^Native Hawaiian or Other Pacific Islander^CDCREC|32 Prescott Street Ave^^Warwick^MA^02452^USA^L||^PRN^PH^^^657^5558563|||||||||2186-5^non Hispanic or Latino^CDCREC
+PD1|||||||||||02^Reminder/Recall - any method^HL70215|||||A|20120701|20120701
+NK1|1|Lam^Morgan^^^^^L|MTH^Mother^HL70063|32 Prescott Street Ave^^Warwick^MA^02452^USA^L|^PRN^PH^^^657^5558563
+ORC|RE||IZ-783274^NDA|||||||I-23432^Burden^Donna^A^^^^^NIST-AA-1||57422^RADON^NICHOLAS^^^^^^NIST-AA-1^L
+RXA|0|1|||140^Influenza, seasonal, injectable, preservative free^CVX|0.5|mL^MilliLiter [SI Volume Units]^UCUM||00^New immunization record^NIP001|7832-1^Lemon^Mike^A^^^^^NIST-AA-1|^^^X68||||Z0860BB|20121104|CSL^CSL Behring^MVX|||CP|A
+RXR|C28161^Intramuscular^NCIT|LD^Left Arm^HL70163
+OBX|1|CE|64994-7^Vaccine funding program eligibility category^LN|1|V05^VFC eligible - Federally Qualified Health Center Patient (under-insured)^HL70064||||||F|||20120701|||VXC40^Eligibility captured at the immunization level^CDCPHINVS
+OBX|2|CE|30956-7^vaccine type^LN|2|88^Influenza, unspecified formulation^CVX||||||F
+OBX|3|TS|29768-9^Date vaccine information statement published^LN|2|20120702||||||F
+OBX|4|TS|29769-7^Date vaccine information statement presented^LN|2|20120814||||||F</mes:TestObject>
+  </HeaderReport>
+  <SpecificReport>
+    <MetaData>
+      <Profile Organization="NIST" Name="Immunization Messaging" Type="VXU^V04^VXU_V04" Version="IZ MU 2014 1.1" HL7Version="2.5.1" Date="March 15th, 2013"/>
+      <Message Filename="" Encoding="ER7" Transformed="false">
+        <Er7Message>MSH|^~\&amp;|Test EHR Application|X68||NIST Test Iz Reg|201207010822||VXU^V04^VXU_V04|NIST-IZ-001.00|P|2.5.1|||AL|ER
+PID|1||D26376273^^^NIST MPI^MR||Snow^^Ainsley^^^^L|Lam^Morgan|20070706|F||2076-8^Native Hawaiian or Other Pacific Islander^CDCREC|32 Prescott Street Ave^^Warwick^MA^02452^USA^L||^PRN^PH^^^657^5558563|||||||||2186-5^non Hispanic or Latino^CDCREC
+PD1|||||||||||02^Reminder/Recall - any method^HL70215|||||A|20120701|20120701
+NK1|1|Lam^Morgan^^^^^L|MTH^Mother^HL70063|32 Prescott Street Ave^^Warwick^MA^02452^USA^L|^PRN^PH^^^657^5558563
+ORC|RE||IZ-783274^NDA|||||||I-23432^Burden^Donna^A^^^^^NIST-AA-1||57422^RADON^NICHOLAS^^^^^^NIST-AA-1^L
+RXA|0|1|||140^Influenza, seasonal, injectable, preservative free^CVX|0.5|mL^MilliLiter [SI Volume Units]^UCUM||00^New immunization record^NIP001|7832-1^Lemon^Mike^A^^^^^NIST-AA-1|^^^X68||||Z0860BB|20121104|CSL^CSL Behring^MVX|||CP|A
+RXR|C28161^Intramuscular^NCIT|LD^Left Arm^HL70163
+OBX|1|CE|64994-7^Vaccine funding program eligibility category^LN|1|V05^VFC eligible - Federally Qualified Health Center Patient (under-insured)^HL70064||||||F|||20120701|||VXC40^Eligibility captured at the immunization level^CDCPHINVS
+OBX|2|CE|30956-7^vaccine type^LN|2|88^Influenza, unspecified formulation^CVX||||||F
+OBX|3|TS|29768-9^Date vaccine information statement published^LN|2|20120702||||||F
+OBX|4|TS|29769-7^Date vaccine information statement presented^LN|2|20120814||||||F</Er7Message>
+      </Message>
+      <Context>
+        <con:FailureInterpretation>
+          <con:MessageFailure Type="HUMAN_CHECK" Result="WARNING"/>
+          <con:MessageFailure Type="MESSAGE_STRUCTURE" Result="ERROR"/>
+          <con:MessageFailure Type="USAGE" Result="ERROR"/>
+          <con:MessageFailure Type="CARDINALITY" Result="ERROR"/>
+          <con:MessageFailure Type="LENGTH" Result="IGNORE"/>
+          <con:MessageFailure Type="DATATYPE" Result="ERROR"/>
+          <con:MessageFailure Type="DATA" Result="ERROR"/>
+          <con:MessageFailure Type="DATA_PASSED" Result="IGNORE"/>
+          <con:MessageFailure Type="CHECKED" Result="AFFIRMATIVE"/>
+          <con:MessageFailure Type="X-USAGE" Result="ERROR"/>
+          <con:MessageFailure Type="XTRA" Result="ERROR"/>
+          <con:MessageFailure Type="VALUE_NOT_IN_TABLE" Result="ERROR"/>
+          <con:MessageFailure Type="VERSION" Result="ERROR"/>
+          <con:MessageFailure Type="MESSAGE_STRUCTURE_ID" Result="ERROR"/>
+          <con:MessageFailure Type="MESSAGE_VALIDATION_CONTEXT" Result="ALERT"/>
+          <con:MessageFailure Type="TABLE_NOT_FOUND" Result="ALERT"/>
+          <con:MessageFailure Type="AMBIGUOUS_PROFILE" Result="ERROR"/>
+          <con:MessageFailure Type="VALIDATION_CONFIGURATION" Result="ALERT"/>
+        </con:FailureInterpretation>
+      </Context>
+    </MetaData>
+    <AssertionList>
+      <Assertion Type="CHECKED" Result="AFFIRMATIVE" Severity="NORMAL">
+        <Location/>
+        <Description>The version is correct.</Description>
+      </Assertion>
+      <Assertion Type="CHECKED" Result="AFFIRMATIVE" Severity="NORMAL">
+        <Location/>
+        <Description>The message type (MSH.9) is correct.</Description>
+      </Assertion>
+      <Assertion Type="CHECKED" Result="AFFIRMATIVE" Severity="NORMAL">
+        <Location/>
+        <Description>The message structure at the segment level is correct.</Description>
+      </Assertion>
+      <Assertion Type="USAGE" Result="ERROR" Severity="NORMAL">
+        <Location>
+          <Path>PID[1].5[1].2</Path>
+          <ProfileElement>
+            <prof:Segment Name="PID">
+              <prof:Field Name="Patient Name">
+                <prof:Component Name="Given Name"/>
+              </prof:Field>
+            </prof:Segment>
+          </ProfileElement>
+        </Location>
+        <Description>PID[1].5[1].2 is missing</Description>
+      </Assertion>
+      <Assertion Type="VALUE_NOT_IN_TABLE" Result="ERROR" Severity="NORMAL">
+        <Location>
+          <Line>2</Line>
+          <Column>124</Column>
+          <Path>PID[1].10[1].3</Path>
+          <ProfileElement>
+            <prof:Segment Name="PID">
+              <prof:Field Name="Race">
+                <prof:Component Name="Name of Coding System"/>
+              </prof:Field>
+            </prof:Segment>
+          </ProfileElement>
+        </Location>
+        <Content>CDCREC</Content>
+        <Description>The value 'CDCREC' specified in the message does not match any of the values in the table '0396'</Description>
+      </Assertion>
+      <Assertion Type="TABLE_NOT_FOUND" Result="ALERT" Severity="NORMAL">
+        <Location>
+          <Line>2</Line>
+          <Column>163</Column>
+          <Path>PID[1].11[1].4</Path>
+          <ProfileElement>
+            <prof:Segment Name="PID">
+              <prof:Field Name="Patient Address">
+                <prof:Component Name="State or Province"/>
+              </prof:Field>
+            </prof:Segment>
+          </ProfileElement>
+        </Location>
+        <Content>MA</Content>
+        <Description>The value 'MA' specified in the message can't be checked because the table 'US Postal Service State Codes' was not found in the table (value set) file.</Description>
+      </Assertion>
+      <Assertion Type="VALUE_NOT_IN_TABLE" Result="ERROR" Severity="NORMAL">
+        <Location>
+          <Line>2</Line>
+          <Column>239</Column>
+          <Path>PID[1].22[1].3</Path>
+          <ProfileElement>
+            <prof:Segment Name="PID">
+              <prof:Field Name="Ethnic Group">
+                <prof:Component Name="Name of Coding System"/>
+              </prof:Field>
+            </prof:Segment>
+          </ProfileElement>
+        </Location>
+        <Content>CDCREC</Content>
+        <Description>The value 'CDCREC' specified in the message does not match any of the values in the table '0396'</Description>
+      </Assertion>
+      <Assertion Type="TABLE_NOT_FOUND" Result="ALERT" Severity="NORMAL">
+        <Location>
+          <Line>4</Line>
+          <Column>75</Column>
+          <Path>NK1[1].4[1].4</Path>
+          <ProfileElement>
+            <prof:Segment Name="NK1">
+              <prof:Field Name="Address">
+                <prof:Component Name="State or Province"/>
+              </prof:Field>
+            </prof:Segment>
+          </ProfileElement>
+        </Location>
+        <Content>MA</Content>
+        <Description>The value 'MA' specified in the message can't be checked because the table 'US Postal Service State Codes' was not found in the table (value set) file.</Description>
+      </Assertion>
+      <Assertion Type="USAGE" Result="ERROR" Severity="NORMAL">
+        <Location>
+          <Path>RXA[1].3[1]</Path>
+          <ProfileElement>
+            <prof:Segment Name="RXA">
+              <prof:Field Name="Date/Time Start of Administration"/>
+            </prof:Segment>
+          </ProfileElement>
+        </Location>
+        <Description>RXA[1].3[1] is missing</Description>
+      </Assertion>
+      <Assertion Type="VALUE_NOT_IN_TABLE" Result="ERROR" Severity="NORMAL">
+        <Location>
+          <Line>6</Line>
+          <Column>106</Column>
+          <Path>RXA[1].7[1].3</Path>
+          <ProfileElement>
+            <prof:Segment Name="RXA">
+              <prof:Field Name="Administered Units">
+                <prof:Component Name="Name of Coding System"/>
+              </prof:Field>
+            </prof:Segment>
+          </ProfileElement>
+        </Location>
+        <Content>UCUM</Content>
+        <Description>The value 'UCUM' specified in the message does not match any of the values in the table '0396'</Description>
+      </Assertion>
+      <Assertion Type="VALUE_NOT_IN_TABLE" Result="ERROR" Severity="NORMAL">
+        <Location>
+          <Line>6</Line>
+          <Column>139</Column>
+          <Path>RXA[1].9[1].3</Path>
+          <ProfileElement>
+            <prof:Segment Name="RXA">
+              <prof:Field Name="Administration Notes">
+                <prof:Component Name="Name of Coding System"/>
+              </prof:Field>
+            </prof:Segment>
+          </ProfileElement>
+        </Location>
+        <Content>NIP001</Content>
+        <Description>The value 'NIP001' specified in the message does not match any of the values in the table '0396'</Description>
+      </Assertion>
+      <Assertion Type="VALUE_NOT_IN_TABLE" Result="ERROR" Severity="NORMAL">
+        <Location>
+          <Line>7</Line>
+          <Column>26</Column>
+          <Path>RXR[1].1[1].3</Path>
+          <ProfileElement>
+            <prof:Segment Name="RXR">
+              <prof:Field Name="Route">
+                <prof:Component Name="Name of Coding System"/>
+              </prof:Field>
+            </prof:Segment>
+          </ProfileElement>
+        </Location>
+        <Content>NCIT</Content>
+        <Description>The value 'NCIT' specified in the message does not match any of the values in the table '0396'</Description>
+      </Assertion>
+      <Assertion Type="VALUE_NOT_IN_TABLE" Result="ERROR" Severity="NORMAL">
+        <Location>
+          <Line>8</Line>
+          <Column>226</Column>
+          <Path>OBX[1].17[1].3</Path>
+          <ProfileElement>
+            <prof:Segment Name="OBX">
+              <prof:Field Name="Observation Method">
+                <prof:Component Name="Name of Coding System"/>
+              </prof:Field>
+            </prof:Segment>
+          </ProfileElement>
+        </Location>
+        <Content>CDCPHINVS</Content>
+        <Description>The value 'CDCPHINVS' specified in the message does not match any of the values in the table '0396'</Description>
+      </Assertion>
+      <Assertion Type="CHECKED" Result="AFFIRMATIVE" Severity="NORMAL">
+        <Location/>
+        <Description>The message contains no datatype error.</Description>
+      </Assertion>
+      <Assertion Type="CHECKED" Result="AFFIRMATIVE" Severity="NORMAL">
+        <Location/>
+        <Description>The message contains no data (value of an element) error.</Description>
+      </Assertion>
+      <Assertion Type="CHECKED" Result="AFFIRMATIVE" Severity="NORMAL">
+        <Location/>
+        <Description>The message contains no cardinality error.</Description>
+      </Assertion>
+    </AssertionList>
+  </SpecificReport>
+</HL7V2MessageValidationReport>
