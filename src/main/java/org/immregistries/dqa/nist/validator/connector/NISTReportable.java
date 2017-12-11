@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.immregistries.dqa.hl7util.Reportable;
+import org.immregistries.dqa.hl7util.ReportableSource;
 import org.immregistries.dqa.hl7util.SeverityLevel;
 import org.immregistries.dqa.hl7util.model.CodedWithExceptions;
 import org.immregistries.dqa.hl7util.model.ErrorLocation;
@@ -16,6 +17,11 @@ public class NISTReportable implements Reportable {
   private List<ErrorLocation> hl7LocationList = new ArrayList<>();
   private String reportedMessage = null;
   private SeverityLevel severity = null;
+  private ReportableSource source = ReportableSource.NIST;
+
+  public ReportableSource getSource() {
+    return source;
+  }
 
   public void setApplicationErrorCode(CodedWithExceptions applicationErrorCode) {
     this.applicationErrorCode = applicationErrorCode;
