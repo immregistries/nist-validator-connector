@@ -31,7 +31,7 @@ import javax.jws.WebService;
  * The generate(), generateWithTemplate() are used in combination to generate a message. The
  * loadResource() can be used with the generate() or generateFromTemplate() method if desired
  * profile is not available on the server.
- * <p>
+ * <p> 
  * 
  * @author Robert Snelick (NIST)
  */
@@ -235,7 +235,7 @@ public interface MessageGenerationV2Interface {
    *         OID: identifier that references the resource. If the OID is not specified, the
    *         generation service provides an OID. On the NIST server the OID root for a profile is
    *         2.16.840.1.113883.3.72.2.2.XXXXX. For a table resource the OID is
-   *         2.16.840.1.113883.3.72.4.2.XXXXX. The “XXXXX” value is assigned by the server. If the
+   *         2.16.840.1.113883.3.72.4.2.XXXXX. The ï¿½XXXXXï¿½ value is assigned by the server. If the
    *         OID has the same value as an OID that is already registered on the service, it is an
    *         error. The original resource referenced by the OID is not altered. The user must select
    *         another OID to load their resource or need to check to see if the resource they want is
@@ -263,7 +263,7 @@ public interface MessageGenerationV2Interface {
    *         OID: identifier that references the resource. If the OID is not specified, the
    *         generation service provides an OID. On the NIST server the OID root for a profile is
    *         2.16.840.1.113883.3.72.2.2.XXXXX. For a table resource the OID is
-   *         2.16.840.1.113883.3.72.4.2.XXXXX. The “XXXXX” value is assigned by the server. If the
+   *         2.16.840.1.113883.3.72.4.2.XXXXX. The ï¿½XXXXXï¿½ value is assigned by the server. If the
    *         OID has the same value as an OID that is already registered on the service, it is an
    *         error. The original resource referenced by the OID is not altered. The user must select
    *         another OID to load their resource or need to check to see if the resource they want is
