@@ -227,7 +227,7 @@ public interface MessageGenerationV2Interface {
    * that are loaded with this call are reported in the getServiceStatus() method. String
    * xmlLoadResource = loadResource (String resource, String OID, String type);
    * 
-   * @return xmlLoadResource – an XML document indicating the results from the loadResource()
+   * @return xmlLoadResource - an XML document indicating the results from the loadResource()
    *         invocation. The document contains the following attributes.
    *         <p>
    *         status: true if the resource was loaded and validated successfully; false otherwise.
@@ -244,18 +244,18 @@ public interface MessageGenerationV2Interface {
    *         errorDescription: This field provides a detailed description indicating the reason the
    *         resource could not be loaded. For a profile, this will include the results from a
    *         profile validation.
-   * @param resource – is the resource to load. A resource is either a profile or a table. The
+   * @param resource - is the resource to load. A resource is either a profile or a table. The
    *        profile is a valid HL7 conformance profile (i.e., it adheres to the HL7 conformance
    *        profile schema and additional requirements place on it by the NIST service). A table is
    *        validated by the hl7TableLibrary schema.
    * @param OID an identifier that references the resource.
-   * @param type – is the type of the resource. The type is either PROFILE or TABLE. ======= The
+   * @param type - is the type of the resource. The type is either PROFILE or TABLE. ======= The
    *        loadResource() method is used to load an HL7 V2 conformance profile or table (resources)
    *        that can be used in a subsequence generate invocations. The length of time the resource
    *        is available for use in generation is the duration of the web service session. Note that
    *        resources that are loaded with this call are reported in the getServiceStatus() method.
    *        String xmlLoadResource = loadResource (String resource, String OID, String type);
-   * @return xmlLoadResource – an XML document indicating the results from the loadResource()
+   * @return xmlLoadResource - an XML document indicating the results from the loadResource()
    *         invocation. The document contains the following attributes.
    *         <p>
    *         status: true if the resource was loaded and validated successfully; false otherwise.
@@ -272,12 +272,12 @@ public interface MessageGenerationV2Interface {
    *         errorDescription: This field provides a detailed description indicating the reason the
    *         resource could not be loaded. For a profile, this will include the results from a
    *         profile validation.
-   * @param resource – is the resource to load. A resource is either a profile or a table. The
+   * @param resource - is the resource to load. A resource is either a profile or a table. The
    *        profile is a valid HL7 conformance profile (i.e., it adheres to the HL7 conformance
    *        profile schema and additional requirements place on it by the NIST service). A table is
    *        validated by the hl7TableLibrary schema.
    * @param OID an identifier that references the resource.
-   * @param type – is the type of the resource. The type is either PROFILE or TABLE
+   * @param type - is the type of the resource. The type is either PROFILE or TABLE
    */
   String loadResource(String resource, String oid, String type);
 }

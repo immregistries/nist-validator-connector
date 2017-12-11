@@ -113,7 +113,7 @@ public interface MessageValidationV2Interface {
    *        specify how certain failures are interpreted. For example, length failures may be
    *        detected by the validation service but ignored.
    *        <p>
-   * @return xmlResults – an XML document for reporting the results of the HL7 V2 message
+   * @return xmlResults – -an XML document for reporting the results of the HL7 V2 message
    *         validation. For details of the report see the specification for xmlResults. If the
    *         validation process couldn't be performed this is indicated along with the reason why in
    *         the results report.
