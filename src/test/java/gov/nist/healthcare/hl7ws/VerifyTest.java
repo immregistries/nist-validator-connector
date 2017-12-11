@@ -1,9 +1,12 @@
 package gov.nist.healthcare.hl7ws;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
-import org.immregistries.dqa.nist.validator.connector.Assertion;
+import java.util.List;
+
+import org.immregistries.dqa.hl7util.Reportable;
+import org.immregistries.dqa.hl7util.builder.AckBuilder;
+import org.immregistries.dqa.hl7util.builder.AckData;
 import org.immregistries.dqa.nist.validator.connector.NISTValidator;
 import org.immregistries.dqa.nist.validator.connector.ValidationReport;
 import org.immregistries.dqa.nist.validator.connector.ValidationResource;
@@ -25,29 +28,8 @@ public class VerifyTest {
       + "OBX|3|TS|29768-9^Date vaccine information statement published^LN|2|20120702||||||F\r"
       + "OBX|4|TS|29769-7^Date vaccine information statement presented^LN|2|20120814||||||F\r";
 
-  private static final String ACK_MESSAGE1 = "MSH|^~\\&|NISTIISAPP|NISTIISFAC|NISTEHRAPP|NISTEHRFAC|20150625121047.853-0500||ACK^V04^ACK|NIST-IZ-AD-7.2_Receive_ACK_Z23|P|2.5.1|||NE|NE|||||Z23^CDCPHINVS|NISTIISFAC^^^^^NIST-AA-IZ-1^XX^^^100-3322|NISTEHRFAC^^^^^NIST-AA-IZ-1^XX^^^100-6482\r"
-      + "MSA|AE|NIST-IZ-AD-7.1_Send_V04_Z22\r"
-      + "ERR||RXA^1^5^1^1|999^Application error^HL70357|E|5^Table value not found^HL70533|||Vaccine code not recognized - message rejected\r";
 
-  private static final String ACK_MESSAGE2 = "MSH|^~\\&|NISTIISAPP|NISTIISFAC|NISTEHRAPP|NISTEHRFAC|20150625121047.853-0500||ACK^V04^ACK|NIST-IZ-AD-7.2_Receive_ACK_Z23|P|2.5.1|||NE|NE|||||Z23^CDCPHINVS|NISTIISFAC^^^^^NIST-AA-IZ-1^XX^^^100-3322|NISTEHRFAC^^^^^NIST-AA-IZ-1^XX^^^100-6482\r"
-      + "MSA|AA|NIST-IZ-AD-7.1_Send_V04_Z22\r"
-      + "ERR||RXA^1^5^1^1|999^Application error^HL70357|E|5^Table value not found^HL70533|||Vaccine code not recognized - message rejected\r";
-
-  private static final String ACK_MESSAGE3 = "MSH|^~\\&|NISTIISAPP|NISTIISFAC|NISTEHRAPP|NISTEHRFAC|20150625121047.853-0500||ACK^V04^ACK|NIST-IZ-AD-7.2_Receive_ACK_Z23|P|2.5.1|||NE|NE|||||Z23^CDCPHINVS|NISTIISFAC^^^^^NIST-AA-IZ-1^XX^^^100-3322|NISTEHRFAC^^^^^NIST-AA-IZ-1^XX^^^100-6482\r"
-      + "MSA|AA\r"
-      + "ERR||RXA^1^5^1^1|999^Application error^HL70357|E|5^Table value not found^HL70533|||Vaccine code not recognized - message rejected\r";
-  
-  private static final String RSP_Z42_MESSAGE = "MSH|^~\\&|MYIIS|MyStateIIS|MYEHR|Myclinic|20091130020020-0500||RSP^K11^RSP_K11|7731029|P|2.5.1|||NE|NE|||||Z42^CDCPHINVS|A_Clinic^SOME_SYSTEM^^^^X68&&^AN^^^A_Clinic1234^\r"+
-"MSA|AA|793543\r"+
-"QAK|37374859|OK|Z44^Request Evaluated History and Forecast^CDCPHINVS\r"+
-"QPD|Z44^Request Evaluated History and Forecast^CDCPHINVS|37374859||Child^Bobbie^Q^^^^L|Que^Suzy^^^^^M|20050512|M|10 East Main St^^Myfaircity^GA^^^L\r"+
-"PID|1||123456^^^MYEHR^MR~987633^^^MYIIS^SR||Child^Robert^Quenton^^^^L|Que^Suzy^^^^^M|20070706|M|||32 Prescott Street Ave^^Warwick^MA^02452^USA^L\r"+
-"ORC|RE||197027^DCS|||||||^Clerk^Myron||^Pediatric^MARY^^^^^^^L^^^^^^^^^^^MD\r"+
-"RXA|0|1|20090412|20090412|48^HIB PRP-T^CVX|0.5|mL^^UCUM||00^new immunization record^NIP001|^Sticker^Nurse|^^^DCS_DC||||33k2a||PMC^sanofi^MVX|||CP|A\r"+
-"RXR|C28161^IM^NCIT^IM^IM^HL70162|\r"+
-"OBX|1|CE|59779-9^Schedule used^LN|1|VXC16^ACIP^CDCPHINVS||||||F|||20090415\r";
-
-  private static final String OID = "2.16.840.1.113883.3.72.2.2.99001";
+  private static final String OID = "2.16.840.1.113883.3.72.2.3.99001";
   /*
    * 
    * <Resource> <resourceID>2.16.840.1.113883.3.72.2.2.99001</resourceID>
@@ -55,6 +37,17 @@ public class VerifyTest {
    * <organization>NIST</organization> <HL7version>2.5.1</HL7version>
    * <resourceType>PROFILE</resourceType> </Resource>
    */
+  
+  @Test
+  public void testAssertion()
+  {
+    NISTValidator validator = new NISTValidator();
+    AckData ackData = new AckData();
+    List<Reportable> reportableList = validator.validateAndReport(EXAMPLE_MESSAGE);
+    assertEquals(8, reportableList.size());
+    ackData.setReportables(reportableList);
+    System.out.println(AckBuilder.INSTANCE.buildAckFrom(ackData));
+  }
 
   @Test
   public void test() {
@@ -64,81 +57,29 @@ public class VerifyTest {
     System.out.println(result);
     ValidationReport validationReport = new ValidationReport(result);
     assertEquals("Complete", validationReport.getHeaderReport().getValidationStatus());
-    assertEquals(16, validationReport.getAssertionList().size());
-    assertEquals(2, validationReport.getAssertionList().get(4).getLine());
-    assertEquals(124, validationReport.getAssertionList().get(4).getColumn());
-    assertEquals("VALUE_NOT_IN_TABLE", validationReport.getAssertionList().get(4).getType());
-    assertEquals("PID[1].10[1].3", validationReport.getAssertionList().get(4).getPath());
-    assertEquals("PID", validationReport.getAssertionList().get(4).getSegment());
-    assertEquals("Race", validationReport.getAssertionList().get(4).getField());
-    assertEquals("Name of Coding System", validationReport.getAssertionList().get(4).getComponent());
-
-    validationReport = NISTValidator.validate(EXAMPLE_MESSAGE, ValidationResource.IZ_VXU);
-    assertEquals("Complete", validationReport.getHeaderReport().getValidationStatus());
-    assertEquals(16, validationReport.getAssertionList().size());
-    assertEquals(2, validationReport.getAssertionList().get(4).getLine());
-    assertEquals(124, validationReport.getAssertionList().get(4).getColumn());
-    assertEquals("PID[1].10[1].3", validationReport.getAssertionList().get(4).getPath());
-    assertEquals("PID", validationReport.getAssertionList().get(4).getSegment());
-    assertEquals("Race", validationReport.getAssertionList().get(4).getField());
-    assertEquals("Name of Coding System", validationReport.getAssertionList().get(4).getComponent());
-
-    validationReport = NISTValidator.validate(EXAMPLE_MESSAGE, ValidationResource.IZ_VXU_Z22);
-    assertEquals("Complete", validationReport.getHeaderReport().getValidationStatus());
     assertEquals(47, validationReport.getAssertionList().size());
-
-    validationReport = NISTValidator.validate(ACK_MESSAGE1, ValidationResource.IZ_ACK_FOR_AIRA);
-    assertEquals("Complete", validationReport.getHeaderReport().getValidationStatus());
-    for (Assertion assertion : validationReport.getAssertionList()) {
-      if (assertion.getResult().equalsIgnoreCase("ERROR")) {
-        fail("Message should pass: " + assertion.getDescription());
-      }
-    }
-
-    {
-      validationReport = NISTValidator.validate(ACK_MESSAGE2, ValidationResource.IZ_ACK_FOR_AIRA);
-      assertEquals("Complete", validationReport.getHeaderReport().getValidationStatus());
-      boolean hasError = false;
-      for (Assertion assertion : validationReport.getAssertionList()) {
-        if (assertion.getResult().equalsIgnoreCase("ERROR")) {
-          hasError = true;
-          break;
-        }
-      }
-      if (!hasError) {
-        fail("No problem found in message.");
-      }
-    }
-    {
-      validationReport = NISTValidator.validate(ACK_MESSAGE3, ValidationResource.IZ_ACK_FOR_AIRA);
-      assertEquals("Complete", validationReport.getHeaderReport().getValidationStatus());
-      boolean hasError = false;
-      for (Assertion assertion : validationReport.getAssertionList()) {
-        if (assertion.getResult().equalsIgnoreCase("ERROR")) {
-          hasError = true;
-          break;
-        }
-      }
-      if (!hasError) {
-        fail("No problem found in message.");
-      }
-    }
+    assertEquals(6, validationReport.getAssertionList().get(46).getLine());
+    assertEquals(124, validationReport.getAssertionList().get(46).getColumn());
+    assertEquals("VALUE_NOT_IN_TABLE", validationReport.getAssertionList().get(46).getType());
+    assertEquals("PID[1].10[1].3", validationReport.getAssertionList().get(46).getPath());
+    assertEquals("PID", validationReport.getAssertionList().get(46).getSegment());
+    assertEquals("Race", validationReport.getAssertionList().get(46).getField());
+    assertEquals("Name of Coding System", validationReport.getAssertionList().get(46).getComponent());
     
-    {
-      validationReport = NISTValidator.validate(RSP_Z42_MESSAGE, ValidationResource.IZ_RSP_Z42);
-      assertEquals("Complete", validationReport.getHeaderReport().getValidationStatus());
-      boolean hasError = false;
-      for (Assertion assertion : validationReport.getAssertionList()) {
-        if (assertion.getResult().equalsIgnoreCase("ERROR")) {
-          hasError = true;
-          break;
-        }
-      }
-      if (hasError) {
-        fail("Errors found in message");
-      }
-    }
+    
+    NISTValidator validator = new NISTValidator();
 
+    validationReport = validator.validate(EXAMPLE_MESSAGE, ValidationResource.IZ_VXU);
+    assertEquals("Complete", validationReport.getHeaderReport().getValidationStatus());
+    assertEquals(16, validationReport.getAssertionList().size());
+    assertEquals(2, validationReport.getAssertionList().get(4).getLine());
+    assertEquals(124, validationReport.getAssertionList().get(4).getColumn());
+    assertEquals("PID[1].10[1].3", validationReport.getAssertionList().get(4).getPath());
+    assertEquals("PID", validationReport.getAssertionList().get(4).getSegment());
+    assertEquals("Race", validationReport.getAssertionList().get(4).getField());
+    assertEquals("Name of Coding System", validationReport.getAssertionList().get(4).getComponent());
+
+    
 
   }
 

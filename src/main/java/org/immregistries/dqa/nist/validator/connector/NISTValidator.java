@@ -1,5 +1,11 @@
 package org.immregistries.dqa.nist.validator.connector;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.immregistries.dqa.hl7util.Reportable;
+import org.immregistries.dqa.hl7util.SeverityLevel;
+import org.immregistries.dqa.hl7util.model.ErrorLocation;
 import org.immregistries.dqa.hl7util.parser.HL7Reader;
 
 import gov.nist.healthcare.hl7ws.client.MessageValidationV2SoapClient;
@@ -9,18 +15,26 @@ public class NISTValidator {
   public static final String EVS_URL_DEFAULT =
       "http://hl7v2.ws.nist.gov/hl7v2ws//services/soap/MessageValidationV2";
 
-  private static String soapClientUrl = EVS_URL_DEFAULT;
+  private String soapClientUrl = null;
 
-  private static MessageValidationV2SoapClient soapClient = null;
+  private MessageValidationV2SoapClient soapClient = null;
 
-  private static synchronized MessageValidationV2SoapClient getSoapClient() {
+  public NISTValidator() {
+    this.soapClientUrl = EVS_URL_DEFAULT;
+  }
+
+  public NISTValidator(String soapClientUrl) {
+    this.soapClientUrl = soapClientUrl;
+  }
+
+  private synchronized MessageValidationV2SoapClient getSoapClient() {
     if (soapClient == null) {
       soapClient = new MessageValidationV2SoapClient(soapClientUrl);
     }
     return soapClient;
   }
 
-  public static ValidationReport validate(String messageText) {
+  public ValidationReport validate(String messageText) {
     ValidationResource validationResource = ascertainValidationResource(messageText);
     if (validationResource == null) {
       return null;
@@ -29,19 +43,142 @@ public class NISTValidator {
     }
   }
 
-
-  private static String replace(String description, String search, String replace) {
-    int startPos = description.indexOf(search);
-    while (startPos >= 0) {
-      description = description.substring(0, startPos) + replace
-          + description.substring(startPos + search.length());
-      startPos = description.indexOf(search);
+  public List<Reportable> validateAndReport(String messageText) {
+    ValidationResource validationResource = ascertainValidationResource(messageText);
+    if (validationResource == null) {
+      List<Reportable> reportableList = new ArrayList<>();
+      NISTReportable reportable = new NISTReportable();
+      reportableList.add(reportable);
+      reportable.setReportedMessage("Unable to validate with NIST, unrecognized message");
+      reportable.setSeverity(SeverityLevel.WARN);
+      reportable.getHl7ErrorCode().setIdentifier("0");
+      return reportableList;
+    } else {
+      return validateAndReport(messageText, validationResource);
     }
-    return description;
   }
 
-  public static ValidationReport validate(String messageText,
+  public List<Reportable> validateAndReport(String messageText,
       ValidationResource validationResource) {
+
+    ValidationReport validationReport = validate(messageText, validationResource);
+    List<Reportable> reportableList = new ArrayList<>();
+    for (Assertion assertion : validationReport.getAssertionList()) {
+      String severity = assertion.getResult();
+      SeverityLevel severityLevel = SeverityLevel.ACCEPT;
+      if (severity.equalsIgnoreCase("error")) {
+        severityLevel = SeverityLevel.WARN;
+      }
+      if (severityLevel != SeverityLevel.ACCEPT) {
+        NISTReportable reportable = new NISTReportable();
+        reportableList.add(reportable);
+        reportable.setReportedMessage(assertion.getDescription());
+        reportable.setSeverity(severityLevel);
+        reportable.getHl7ErrorCode().setIdentifier("0");
+        String path = assertion.getPath();
+        reportable.setDiagnosticMessage(path);
+        readErrorLocation(reportable, path);
+      }
+    }
+    return reportableList;
+  }
+
+  public void readErrorLocation(NISTReportable reportable, String path) {
+    if (path != null && path.length() >= 3) {
+      String segmentid = path.substring(0, 3);
+      if (path.length() > 3) {
+        path = path.substring(4);
+      } else {
+        path = "";
+      }
+      ErrorLocation errorLocation = readErrorLocation(path, segmentid);
+      if (errorLocation != null) {
+        reportable.getHl7LocationList().add(errorLocation);
+      }
+    }
+  }
+
+  public ErrorLocation readErrorLocation(String path, String segmentid) {
+    ErrorLocation errorLocation = new ErrorLocation();
+    errorLocation.setSegmentId(segmentid);
+    int firstDotPos = path.indexOf(".");
+    String segmentSequence = path;
+    if (firstDotPos >= 0) {
+      segmentSequence = path.substring(0, firstDotPos);
+      path = path.substring(firstDotPos + 1);
+    } else {
+      path = "";
+    }
+    int sequence = parseBracketInt(segmentSequence);
+    if (sequence > 0) {
+      errorLocation.setSegmentSequence(sequence);
+    }
+    if (path.length() > 0) {
+      {
+        String fieldString = path;
+        int dotPos = path.indexOf(".");
+        if (dotPos >= 0) {
+          fieldString = path.substring(0, dotPos);
+          path = path.substring(dotPos + 1);
+        } else {
+          path = "";
+        }
+        int fieldPosition = 0;
+        int bracketPos = fieldString.indexOf("[");
+        try {
+          if (bracketPos >= 0) {
+            fieldPosition = Integer.parseInt(fieldString.substring(0, bracketPos).trim());
+            fieldString = fieldString.substring(bracketPos + 1);
+            errorLocation.setFieldRepetition(parseBracketInt(fieldString));
+          } else {
+            fieldPosition = Integer.parseInt(fieldString.trim());
+          }
+        } catch (NumberFormatException nfe) {
+          // ignore
+        }
+        if (fieldPosition != 0) {
+          errorLocation.setFieldPosition(fieldPosition);
+        }
+      }
+      if (path.length() > 0) {
+        String componentString = path;
+        int dotPos = path.indexOf(".");
+        if (dotPos >= 0) {
+          componentString = path.substring(0, dotPos);
+          path = path.substring(dotPos + 1);
+        } else {
+          path = "";
+        }
+        try {
+          errorLocation.setComponentNumber(Integer.parseInt(componentString.trim()));
+        } catch (NumberFormatException nfe) {
+          // ignore
+        }
+      }
+      if (path.length() > 0) {
+        try {
+          errorLocation.setSubComponentNumber(Integer.parseInt(path.trim()));
+        } catch (NumberFormatException nfe) {
+          // ignore
+        }
+      }
+    }
+    return errorLocation;
+  }
+
+  public int parseBracketInt(String s) {
+    s = s.trim();
+    if (s.startsWith("[") && s.startsWith("]")) {
+      try {
+        return Integer.parseInt(s.substring(1, s.length() - 1).trim());
+      } catch (NumberFormatException nfe) {
+        // ignore
+      }
+    }
+    return 0;
+  }
+
+  public ValidationReport validate(String messageText, ValidationResource validationResource) {
     MessageValidationV2SoapClient soapClient = getSoapClient();
     synchronized (soapClient) {
       String result = soapClient.validate(messageText, validationResource.getOid(), "", "");
