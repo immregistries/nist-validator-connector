@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.immregistries.dqa.hl7util.Reportable;
 import org.immregistries.dqa.hl7util.SeverityLevel;
+import org.immregistries.dqa.hl7util.model.CodedWithExceptions;
 import org.immregistries.dqa.hl7util.model.ErrorLocation;
 import org.immregistries.dqa.hl7util.parser.HL7Reader;
 
@@ -75,6 +76,12 @@ public class NISTValidator {
         reportable.setReportedMessage(assertion.getDescription());
         reportable.setSeverity(severityLevel);
         reportable.getHl7ErrorCode().setIdentifier("0");
+        CodedWithExceptions cwe = new CodedWithExceptions();
+        cwe.setAlternateIdentifier(assertion.getType());
+        cwe.setAlternateText(assertion.getType());
+        cwe.setNameOfAlternateCodingSystem("L");
+        reportable.setApplicationErrorCode(cwe);
+        
         String path = assertion.getPath();
         reportable.setDiagnosticMessage(path);
         readErrorLocation(reportable, path);
