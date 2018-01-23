@@ -12,6 +12,7 @@ import gov.nist.healthcare.hl7ws.client.MessageValidationV2SoapClient;
 
 
 public class NISTValidator {
+  public static boolean enabled = false;
   public static final String EVS_URL_DEFAULT =
       "http://hl7v2.ws.nist.gov/hl7v2ws//services/soap/MessageValidationV2";
 
@@ -35,27 +36,34 @@ public class NISTValidator {
   }
 
   public ValidationReport validate(String messageText) {
-    ValidationResource validationResource = ascertainValidationResource(messageText);
-    if (validationResource == null) {
-      return null;
-    } else {
-      return validate(messageText, validationResource);
+    if (enabled) {
+      ValidationResource validationResource = ascertainValidationResource(messageText);
+      if (validationResource == null) {
+        return null;
+      } else {
+        return validate(messageText, validationResource);
+      }
     }
+    return null;
   }
 
   public List<Reportable> validateAndReport(String messageText) {
-    ValidationResource validationResource = ascertainValidationResource(messageText);
-    if (validationResource == null) {
-      List<Reportable> reportableList = new ArrayList<>();
-      NISTReportable reportable = new NISTReportable();
-      reportableList.add(reportable);
-      reportable.setReportedMessage("Unable to validate with NIST, unrecognized message");
-      reportable.setSeverity(SeverityLevel.WARN);
-      reportable.getHl7ErrorCode().setIdentifier("0");
-      return reportableList;
-    } else {
-      return validateAndReport(messageText, validationResource);
+    if (enabled) {
+        ValidationResource validationResource = ascertainValidationResource(messageText);
+        if (validationResource == null) {
+            List<Reportable> reportableList = new ArrayList<>();
+            NISTReportable reportable = new NISTReportable();
+            reportableList.add(reportable);
+            reportable.setReportedMessage("Unable to validate with NIST, unrecognized message");
+            reportable.setSeverity(SeverityLevel.WARN);
+            reportable.getHl7ErrorCode().setIdentifier("0");
+            return reportableList;
+        } else {
+            return validateAndReport(messageText, validationResource);
+        }
     }
+
+    return new ArrayList<>();
   }
 
   public List<Reportable> validateAndReport(String messageText,
