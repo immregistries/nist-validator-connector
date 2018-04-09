@@ -7,14 +7,14 @@ import org.immregistries.dqa.hl7util.Reportable;
 import org.immregistries.dqa.hl7util.ReportableSource;
 import org.immregistries.dqa.hl7util.SeverityLevel;
 import org.immregistries.dqa.hl7util.model.CodedWithExceptions;
-import org.immregistries.dqa.hl7util.model.ErrorLocation;
+import org.immregistries.dqa.hl7util.model.Hl7Location;
 
 public class NISTReportable implements Reportable {
 
   private CodedWithExceptions applicationErrorCode = new CodedWithExceptions();
   private String diagnosticMessage = null;
   private CodedWithExceptions hl7ErrorCode = new CodedWithExceptions();
-  private List<ErrorLocation> hl7LocationList = new ArrayList<>();
+  private List<Hl7Location> hl7LocationList = new ArrayList<>();
   private String reportedMessage = null;
   private SeverityLevel severity = null;
   private ReportableSource source = ReportableSource.NIST;
@@ -35,7 +35,7 @@ public class NISTReportable implements Reportable {
     this.hl7ErrorCode = hl7ErrorCode;
   }
 
-  public void setHl7LocationList(List<ErrorLocation> hl7LocationList) {
+  public void setHl7LocationList(List<Hl7Location> hl7LocationList) {
     this.hl7LocationList = hl7LocationList;
   }
 
@@ -63,7 +63,7 @@ public class NISTReportable implements Reportable {
   }
 
   @Override
-  public List<ErrorLocation> getHl7LocationList() {
+  public List<Hl7Location> getHl7LocationList() {
     return hl7LocationList;
   }
 

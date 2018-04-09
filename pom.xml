@@ -36,7 +36,7 @@
     <dependency>
       <groupId>org.immregistries</groupId>
       <artifactId>dqa-hl7-utility</artifactId>
-      <version>2.0.2-DEVELOPMENT</version>
+      <version>2018.3</version>
     </dependency>
 
 	<dependency>

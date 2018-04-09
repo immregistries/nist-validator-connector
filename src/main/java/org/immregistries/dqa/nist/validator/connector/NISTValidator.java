@@ -6,7 +6,7 @@ import java.util.List;
 import org.immregistries.dqa.hl7util.Reportable;
 import org.immregistries.dqa.hl7util.SeverityLevel;
 import org.immregistries.dqa.hl7util.model.CodedWithExceptions;
-import org.immregistries.dqa.hl7util.model.ErrorLocation;
+import org.immregistries.dqa.hl7util.model.Hl7Location;
 import org.immregistries.dqa.hl7util.parser.HL7Reader;
 
 import gov.nist.healthcare.hl7ws.client.MessageValidationV2SoapClient;
@@ -106,15 +106,15 @@ public class NISTValidator {
       } else {
         path = "";
       }
-      ErrorLocation errorLocation = readErrorLocation(path, segmentid);
+      Hl7Location errorLocation = readErrorLocation(path, segmentid);
       if (errorLocation != null) {
         reportable.getHl7LocationList().add(errorLocation);
       }
     }
   }
 
-  public ErrorLocation readErrorLocation(String path, String segmentid) {
-    ErrorLocation errorLocation = new ErrorLocation();
+  public Hl7Location readErrorLocation(String path, String segmentid) {
+	  Hl7Location errorLocation = new Hl7Location();
     errorLocation.setSegmentId(segmentid);
     int firstDotPos = path.indexOf(".");
     String segmentSequence = path;
