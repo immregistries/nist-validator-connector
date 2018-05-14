@@ -52,14 +52,14 @@ public class VerifyTest {
   @Test
   public void test() {
     MessageValidationV2SoapClient soapClient = new MessageValidationV2SoapClient(
-        "http://hl7v2.ws.nist.gov/hl7v2ws//services/soap/MessageValidationV2");
+        "https://hl7v2.ws.nist.gov/hl7v2ws//services/soap/MessageValidationV2");
     String result = soapClient.validate(EXAMPLE_MESSAGE, OID, "", "");
     System.out.println(result);
     ValidationReport validationReport = new ValidationReport(result);
     assertEquals("Complete", validationReport.getHeaderReport().getValidationStatus());
     assertEquals(47, validationReport.getAssertionList().size());
     assertEquals(6, validationReport.getAssertionList().get(46).getLine());
-    assertEquals(124, validationReport.getAssertionList().get(46).getColumn());
+    assertEquals(146, validationReport.getAssertionList().get(46).getColumn());
     assertEquals("VALUE_NOT_IN_TABLE", validationReport.getAssertionList().get(46).getType());
     assertEquals("PID[1].10[1].3", validationReport.getAssertionList().get(46).getPath());
     assertEquals("PID", validationReport.getAssertionList().get(46).getSegment());

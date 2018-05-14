@@ -13,9 +13,9 @@ import gov.nist.healthcare.hl7ws.client.MessageValidationV2SoapClient;
 
 
 public class NISTValidator {
-  public static boolean enabled = false;
+  public static boolean enabled = true;
   public static final String EVS_URL_DEFAULT =
-      "http://hl7v2.ws.nist.gov/hl7v2ws//services/soap/MessageValidationV2";
+      "https://hl7v2.ws.nist.gov/hl7v2ws//services/soap/MessageValidationV2";
 
   private String soapClientUrl = null;
 
@@ -220,10 +220,8 @@ public class NISTValidator {
         validationResource = ValidationResource.IZ_QBP_Z34;
       } else if (profileId.equals("Z44") && messageType.equals("QBP")) {
         validationResource = ValidationResource.IZ_QBP_Z44;
-      } else if (profileId.equals("Z22") && messageType.equals("VXU")) {
+      } else if (messageType.equals("VXU")) {
         validationResource = ValidationResource.IZ_VXU_Z22;
-      } else if (profileId.equals("") && messageType.equals("VXU")) {
-        validationResource = ValidationResource.IZ_VXU;
       } else if (profileId.equals("Z23") || messageType.equals("ACK")) {
         validationResource = ValidationResource.IZ_ACK_FOR_AIRA;
         // validationResource = ValidationResource.IZ_ACK_Z23;
