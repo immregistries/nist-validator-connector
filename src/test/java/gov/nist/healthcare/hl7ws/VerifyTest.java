@@ -4,12 +4,12 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
-import org.immregistries.dqa.hl7util.Reportable;
-import org.immregistries.dqa.hl7util.builder.AckBuilder;
-import org.immregistries.dqa.hl7util.builder.AckData;
-import org.immregistries.dqa.nist.validator.connector.NISTValidator;
-import org.immregistries.dqa.nist.validator.connector.ValidationReport;
-import org.immregistries.dqa.nist.validator.connector.ValidationResource;
+import org.immregistries.mqe.hl7util.Reportable;
+import org.immregistries.mqe.hl7util.builder.AckBuilder;
+import org.immregistries.mqe.hl7util.builder.AckData;
+import org.immregistries.nist.validator.connector.NISTValidator;
+import org.immregistries.nist.validator.connector.ValidationReport;
+import org.immregistries.nist.validator.connector.ValidationResource;
 import org.junit.Test;
 
 import gov.nist.healthcare.hl7ws.client.MessageValidationV2SoapClient;

@@ -1,4 +1,4 @@
-package org.immregistries.dqa.nist.validator.connector;
+package org.immregistries.nist.validator.connector;
 
 public enum ValidationResource {
   IZ_VXU("VXU", "HL7 v2.5.1 IG 1.4 8/2012", "2.16.840.1.113883.3.72.2.2.99001"),

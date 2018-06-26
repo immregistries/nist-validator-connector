@@ -1,4 +1,4 @@
-package org.immregistries.dqa.nist.validator.connector;
+package org.immregistries.nist.validator.connector;
 
 public class Assertion {
   private String virtualId = "";

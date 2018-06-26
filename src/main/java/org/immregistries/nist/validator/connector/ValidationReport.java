@@ -1,4 +1,4 @@
-package org.immregistries.dqa.nist.validator.connector;
+package org.immregistries.nist.validator.connector;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;

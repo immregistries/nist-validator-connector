@@ -1,13 +1,13 @@
-package org.immregistries.dqa.nist.validator.connector;
+package org.immregistries.nist.validator.connector;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.immregistries.dqa.hl7util.Reportable;
-import org.immregistries.dqa.hl7util.SeverityLevel;
-import org.immregistries.dqa.hl7util.model.CodedWithExceptions;
-import org.immregistries.dqa.hl7util.model.ErrorLocation;
-import org.immregistries.dqa.hl7util.parser.HL7Reader;
+import org.immregistries.mqe.hl7util.Reportable;
+import org.immregistries.mqe.hl7util.SeverityLevel;
+import org.immregistries.mqe.hl7util.model.CodedWithExceptions;
+import org.immregistries.mqe.hl7util.model.Hl7Location;
+import org.immregistries.mqe.hl7util.parser.HL7Reader;
 
 import gov.nist.healthcare.hl7ws.client.MessageValidationV2SoapClient;
 
@@ -106,16 +106,16 @@ public class NISTValidator {
       } else {
         path = "";
       }
-      ErrorLocation errorLocation = readErrorLocation(path, segmentid);
-      if (errorLocation != null) {
-        reportable.getHl7LocationList().add(errorLocation);
+      Hl7Location hl7Location = readErrorLocation(path, segmentid);
+      if (hl7Location != null) {
+        reportable.getHl7LocationList().add(hl7Location);
       }
     }
   }
 
-  public ErrorLocation readErrorLocation(String path, String segmentid) {
-    ErrorLocation errorLocation = new ErrorLocation();
-    errorLocation.setSegmentId(segmentid);
+  public Hl7Location readErrorLocation(String path, String segmentid) {
+    Hl7Location hl7Location = new Hl7Location();
+    hl7Location.setSegmentId(segmentid);
     int firstDotPos = path.indexOf(".");
     String segmentSequence = path;
     if (firstDotPos >= 0) {
@@ -126,7 +126,7 @@ public class NISTValidator {
     }
     int sequence = parseBracketInt(segmentSequence);
     if (sequence > 0) {
-      errorLocation.setSegmentSequence(sequence);
+      hl7Location.setSegmentSequence(sequence);
     }
     if (path.length() > 0) {
       {
@@ -144,7 +144,7 @@ public class NISTValidator {
           if (bracketPos >= 0) {
             fieldPosition = Integer.parseInt(fieldString.substring(0, bracketPos).trim());
             fieldString = fieldString.substring(bracketPos + 1);
-            errorLocation.setFieldRepetition(parseBracketInt(fieldString));
+            hl7Location.setFieldRepetition(parseBracketInt(fieldString));
           } else {
             fieldPosition = Integer.parseInt(fieldString.trim());
           }
@@ -152,7 +152,7 @@ public class NISTValidator {
           // ignore
         }
         if (fieldPosition != 0) {
-          errorLocation.setFieldPosition(fieldPosition);
+          hl7Location.setFieldPosition(fieldPosition);
         }
       }
       if (path.length() > 0) {
@@ -165,20 +165,20 @@ public class NISTValidator {
           path = "";
         }
         try {
-          errorLocation.setComponentNumber(Integer.parseInt(componentString.trim()));
+          hl7Location.setComponentNumber(Integer.parseInt(componentString.trim()));
         } catch (NumberFormatException nfe) {
           // ignore
         }
       }
       if (path.length() > 0) {
         try {
-          errorLocation.setSubComponentNumber(Integer.parseInt(path.trim()));
+          hl7Location.setSubComponentNumber(Integer.parseInt(path.trim()));
         } catch (NumberFormatException nfe) {
           // ignore
         }
       }
     }
-    return errorLocation;
+    return hl7Location;
   }
 
   public int parseBracketInt(String s) {
