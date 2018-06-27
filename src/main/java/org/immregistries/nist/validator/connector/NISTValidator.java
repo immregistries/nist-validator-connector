@@ -9,13 +9,14 @@ import org.immregistries.mqe.hl7util.model.CodedWithExceptions;
 import org.immregistries.mqe.hl7util.model.Hl7Location;
 import org.immregistries.mqe.hl7util.parser.HL7Reader;
 
+
 import gov.nist.healthcare.hl7ws.client.MessageValidationV2SoapClient;
 
 
 public class NISTValidator {
-  public static boolean enabled = false;
+  public static boolean enabled = true;
   public static final String EVS_URL_DEFAULT =
-      "http://hl7v2.ws.nist.gov/hl7v2ws//services/soap/MessageValidationV2";
+      "https://hl7v2.ws.nist.gov/hl7v2ws//services/soap/MessageValidationV2";
 
   private String soapClientUrl = null;
 
@@ -89,7 +90,7 @@ public class NISTValidator {
         cwe.setAlternateText(assertion.getType());
         cwe.setNameOfAlternateCodingSystem("L");
         reportable.setApplicationErrorCode(cwe);
-        
+
         String path = assertion.getPath();
         reportable.setDiagnosticMessage(path);
         readErrorLocation(reportable, path);
@@ -106,16 +107,17 @@ public class NISTValidator {
       } else {
         path = "";
       }
-      Hl7Location hl7Location = readErrorLocation(path, segmentid);
-      if (hl7Location != null) {
-        reportable.getHl7LocationList().add(hl7Location);
+
+      Hl7Location errorLocation = readErrorLocation(path, segmentid);
+      if (errorLocation != null) {
+        reportable.getHl7LocationList().add(errorLocation);
       }
     }
   }
 
   public Hl7Location readErrorLocation(String path, String segmentid) {
-    Hl7Location hl7Location = new Hl7Location();
-    hl7Location.setSegmentId(segmentid);
+	  Hl7Location errorLocation = new Hl7Location();
+    errorLocation.setSegmentId(segmentid);
     int firstDotPos = path.indexOf(".");
     String segmentSequence = path;
     if (firstDotPos >= 0) {
@@ -220,10 +222,8 @@ public class NISTValidator {
         validationResource = ValidationResource.IZ_QBP_Z34;
       } else if (profileId.equals("Z44") && messageType.equals("QBP")) {
         validationResource = ValidationResource.IZ_QBP_Z44;
-      } else if (profileId.equals("Z22") && messageType.equals("VXU")) {
+      } else if (messageType.equals("VXU")) {
         validationResource = ValidationResource.IZ_VXU_Z22;
-      } else if (profileId.equals("") && messageType.equals("VXU")) {
-        validationResource = ValidationResource.IZ_VXU;
       } else if (profileId.equals("Z23") || messageType.equals("ACK")) {
         validationResource = ValidationResource.IZ_ACK_FOR_AIRA;
         // validationResource = ValidationResource.IZ_ACK_Z23;

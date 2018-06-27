@@ -4,3 +4,6 @@
 .settings/org.eclipse.jdt.core.prefs
 target/
 *.iml
+.settings/org.eclipse.m2e.core.prefs
+
+\.settings/
