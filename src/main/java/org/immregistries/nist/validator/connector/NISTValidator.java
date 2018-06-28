@@ -128,7 +128,7 @@ public class NISTValidator {
     }
     int sequence = parseBracketInt(segmentSequence);
     if (sequence > 0) {
-      hl7Location.setSegmentSequence(sequence);
+      errorLocation.setSegmentSequence(sequence);
     }
     if (path.length() > 0) {
       {
@@ -146,7 +146,7 @@ public class NISTValidator {
           if (bracketPos >= 0) {
             fieldPosition = Integer.parseInt(fieldString.substring(0, bracketPos).trim());
             fieldString = fieldString.substring(bracketPos + 1);
-            hl7Location.setFieldRepetition(parseBracketInt(fieldString));
+            errorLocation.setFieldRepetition(parseBracketInt(fieldString));
           } else {
             fieldPosition = Integer.parseInt(fieldString.trim());
           }
@@ -154,7 +154,7 @@ public class NISTValidator {
           // ignore
         }
         if (fieldPosition != 0) {
-          hl7Location.setFieldPosition(fieldPosition);
+          errorLocation.setFieldPosition(fieldPosition);
         }
       }
       if (path.length() > 0) {
@@ -167,20 +167,20 @@ public class NISTValidator {
           path = "";
         }
         try {
-          hl7Location.setComponentNumber(Integer.parseInt(componentString.trim()));
+          errorLocation.setComponentNumber(Integer.parseInt(componentString.trim()));
         } catch (NumberFormatException nfe) {
           // ignore
         }
       }
       if (path.length() > 0) {
         try {
-          hl7Location.setSubComponentNumber(Integer.parseInt(path.trim()));
+          errorLocation.setSubComponentNumber(Integer.parseInt(path.trim()));
         } catch (NumberFormatException nfe) {
           // ignore
         }
       }
     }
-    return hl7Location;
+    return errorLocation;
   }
 
   public int parseBracketInt(String s) {
