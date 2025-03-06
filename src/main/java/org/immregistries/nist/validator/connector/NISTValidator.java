@@ -103,7 +103,7 @@ public class NISTValidator {
     if (path != null && path.length() >= 3) {
       String segmentid = path.substring(0, 3);
       if (path.length() > 3) {
-        path = path.substring(4);
+        path = path.substring(3);
       } else {
         path = "";
       }
@@ -118,11 +118,11 @@ public class NISTValidator {
   public Hl7Location readErrorLocation(String path, String segmentid) {
 	  Hl7Location errorLocation = new Hl7Location();
     errorLocation.setSegmentId(segmentid);
-    int firstDotPos = path.indexOf(".");
+    int firstHyphenPos = path.indexOf("-");
     String segmentSequence = path;
-    if (firstDotPos >= 0) {
-      segmentSequence = path.substring(0, firstDotPos);
-      path = path.substring(firstDotPos + 1);
+    if (firstHyphenPos >= 0) {
+      segmentSequence = path.substring(0, firstHyphenPos);
+      path = path.substring(firstHyphenPos + 1);
     } else {
       path = "";
     }
@@ -145,7 +145,7 @@ public class NISTValidator {
         try {
           if (bracketPos >= 0) {
             fieldPosition = Integer.parseInt(fieldString.substring(0, bracketPos).trim());
-            fieldString = fieldString.substring(bracketPos + 1);
+            fieldString = fieldString.substring(bracketPos);
             errorLocation.setFieldRepetition(parseBracketInt(fieldString));
           } else {
             fieldPosition = Integer.parseInt(fieldString.trim());
@@ -185,7 +185,7 @@ public class NISTValidator {
 
   public int parseBracketInt(String s) {
     s = s.trim();
-    if (s.startsWith("[") && s.startsWith("]")) {
+    if (s.startsWith("[") && s.endsWith("]")) {
       try {
         return Integer.parseInt(s.substring(1, s.length() - 1).trim());
       } catch (NumberFormatException nfe) {
